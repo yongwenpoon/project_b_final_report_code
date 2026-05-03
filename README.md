@@ -4,7 +4,7 @@ This repository contains the MATLAB code used to generate the analyses, figures,
 
 ## Project focus
 
-The report examines whether a direct negative shock to perceived quality can generate broader decline in brand trust without a direct trust shock, and how the severity of that decline changes under different conditions.
+The report examines whether a direct negative shock to perceived quality can generate decline in brand trust without a direct trust shock after a product or service quality crisis, and what shapes the severity of that decline.
 
 The final report uses three focal topics:
 
@@ -14,14 +14,13 @@ The final report uses three focal topics:
 
 ## Repository purpose
 
-This repository is organised for **report reproduction**, not for development history.
+This repository is organised for reproducing the final report outputs rather than documenting the full development history.
 
 It contains:
 
 - the final report-facing runner scripts for Sections 4.1–4.6
 - the core MATLAB functions required to run those analyses
 - the exported figures and tables corresponding to the report results
-
 
 ## Main report runners
 
@@ -36,6 +35,7 @@ Generates:
 - Figure 4.2: `Figure_4_2_S1_MainShock_AllAgents.png`
 - Figure 4.3: `Figure_4_3_BT_ByRole_S0_vs_S1.png`
 - Appendix Figure A1: `Appendix_A1_RoleSpecific_AllTopics.png`
+- Table 4.1: `Table_4_1_S0_InitialFinal_AllAgentSummary.csv`
 - Table 4.2: `Table_4_2_S0_vs_S1_AllAgentSummary.csv`
 - Table 4.3: `Table_4_3_BT_ByRole_MainShock.csv`
 
@@ -127,12 +127,14 @@ This corresponds to the report’s main population setting:
 ## Software
 
 This code was written and tested in MATLAB R2025b (64-bit, macOS).
+
 No special toolbox is intentionally required beyond standard MATLAB functionality used in the scripts.
 
 ## Notes on reproduction
 
 - The scripts are organised to reproduce the **final report figures and tables**, not all intermediate exploratory analyses.
 - The report-facing runners save outputs into section-specific folders.
+- `run_S0_S1_dynamics_projectB_single.m` is used as a backbone runner for the Section 4.1–4.3 report pipeline.
 - If running in a fresh folder, keep all required `.m` files in the same repository root unless you explicitly reorganise the MATLAB path.
 
 ## Report link

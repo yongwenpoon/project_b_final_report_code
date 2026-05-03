@@ -17,12 +17,14 @@ clear; clc; close all;
 %     - Appendix_A1_RoleSpecific_AllTopics.png
 %
 %   Tables:
+%     - Table_4_1_S0_InitialFinal_AllAgentSummary.csv
 %     - Table_4_2_S0_vs_S1_AllAgentSummary.csv
 %     - Table_4_3_BT_ByRole_MainShock.csv
 %
 % Notes:
 %   - This script is the report-facing entry point for Sections 4.1-4.3.
 %   - It uses the existing Project B backbone and main S0/S1 runner.
+%   - Report-facing figures and tables are packaged into one output folder.
 % ============================================================
 
 fprintf('\n============================================================\n');
@@ -50,7 +52,10 @@ end
 %% ------------------------------------------------------------
 % Report export settings
 % ------------------------------------------------------------
-cfg.export = struct();
+if ~isfield(cfg, 'export') || ~isstruct(cfg.export)
+    cfg.export = struct();
+end
+
 cfg.export.save_fig = true;
 cfg.export.outdir   = fullfile(pwd, 'report_outputs_4_1_to_4_3');
 
@@ -71,20 +76,46 @@ mainTag = choose_main_shock_tag_local(results, cfg);
 bt = cfg.topic.idx.BT;
 topicNames = string(cfg.topic.names(:));
 
-% ---- Table for Section 4.2: all-agent S0 vs S1 main shock summary ----
-S0_final_all = results.S0.dyn.final_all(:);
-S1_final_all = results.S1.(mainTag).dyn.final_all(:);
-Diff_all     = S1_final_all - S0_final_all;
+% ---- Table 4.1: S0 initial/final all-agent summary ----
+S0_initial_all = results.S0.dyn.initial_all(:);
+S0_final_all   = results.S0.dyn.final_all(:);
+S0_change_all  = results.S0.dyn.total_change_all(:);
 
-T_all = table( ...
+T_4_1 = table( ...
     topicNames, ...
+    S0_initial_all, ...
     S0_final_all, ...
-    S1_final_all, ...
-    Diff_all, ...
-    'VariableNames', {'Topic','S0_Final','S1_Final','Diff_S1_minus_S0'} ...
+    S0_change_all, ...
+    'VariableNames', {'Topic','S0_Initial','S0_Final','S0_Change'} ...
 );
 
-% ---- Table for Section 4.3: BT by role under S0 and S1 ----
+% ---- Table 4.2: all-agent S0 vs S1 main shock summary ----
+S1_initial_all = results.S1.(mainTag).dyn.initial_all(:);
+S1_final_all   = results.S1.(mainTag).dyn.final_all(:);
+S1_change_all  = results.S1.(mainTag).dyn.total_change_all(:);
+Diff_all       = S1_final_all - S0_final_all;
+
+T_4_2 = table( ...
+    topicNames, ...
+    S0_initial_all, ...
+    S0_final_all, ...
+    S0_change_all, ...
+    S1_initial_all, ...
+    S1_final_all, ...
+    S1_change_all, ...
+    Diff_all, ...
+    'VariableNames', { ...
+        'Topic', ...
+        'S0_Initial', ...
+        'S0_Final', ...
+        'S0_Change', ...
+        'S1_Initial', ...
+        'S1_Final', ...
+        'S1_Change', ...
+        'Diff_S1_minus_S0'} ...
+);
+
+% ---- Table 4.3: BT by role under S0 and S1 ----
 nOrd = numel(results.network.idx.ordinary);
 nOff = numel(results.network.idx.official);
 nEw  = numel(results.network.idx.ewom);
@@ -107,7 +138,7 @@ S1_Final_BT = [ ...
 % Report-facing decline magnitude: positive means larger decline
 BT_Decline_vs_S0 = S0_Final_BT - S1_Final_BT;
 
-T_bt_role = table( ...
+T_4_3 = table( ...
     Role, ...
     Role_Count, ...
     S0_Final_BT, ...
@@ -119,26 +150,34 @@ T_bt_role = table( ...
 %% ------------------------------------------------------------
 % Save tables
 % ------------------------------------------------------------
-tableA_path = fullfile(cfg.export.outdir, 'Table_4_2_S0_vs_S1_AllAgentSummary.csv');
-tableB_path = fullfile(cfg.export.outdir, 'Table_4_3_BT_ByRole_MainShock.csv');
+table_4_1_path = fullfile(cfg.export.outdir, 'Table_4_1_S0_InitialFinal_AllAgentSummary.csv');
+table_4_2_path = fullfile(cfg.export.outdir, 'Table_4_2_S0_vs_S1_AllAgentSummary.csv');
+table_4_3_path = fullfile(cfg.export.outdir, 'Table_4_3_BT_ByRole_MainShock.csv');
 
-writetable(T_all, tableA_path);
-writetable(T_bt_role, tableB_path);
+writetable(T_4_1, table_4_1_path);
+writetable(T_4_2, table_4_2_path);
+writetable(T_4_3, table_4_3_path);
 
 %% ------------------------------------------------------------
 % Print compact summaries
 % ------------------------------------------------------------
 disp(' ');
 disp('============================================================');
+disp('Table 4.1 summary: S0 initial/final all-agent outcomes');
+disp('============================================================');
+disp(T_4_1);
+
+disp(' ');
+disp('============================================================');
 disp('Table 4.2 summary: S0 vs S1 main shock, all-agent outcomes');
 disp('============================================================');
-disp(T_all);
+disp(T_4_2);
 
 disp(' ');
 disp('============================================================');
 disp('Table 4.3 summary: BT by role under S0 and S1 main shock');
 disp('============================================================');
-disp(T_bt_role);
+disp(T_4_3);
 
 %% ------------------------------------------------------------
 % Final message
@@ -152,6 +191,7 @@ fprintf('  - Figure_4_2_S1_MainShock_AllAgents.png\n');
 fprintf('  - Figure_4_3_BT_ByRole_S0_vs_S1.png\n');
 fprintf('  - Appendix_A1_RoleSpecific_AllTopics.png\n');
 fprintf('\nTables saved:\n');
+fprintf('  - Table_4_1_S0_InitialFinal_AllAgentSummary.csv\n');
 fprintf('  - Table_4_2_S0_vs_S1_AllAgentSummary.csv\n');
 fprintf('  - Table_4_3_BT_ByRole_MainShock.csv\n');
 fprintf('============================================================\n');
