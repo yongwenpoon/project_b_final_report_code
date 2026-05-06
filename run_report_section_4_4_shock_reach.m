@@ -1,7 +1,7 @@
 clear; clc; close all;
 
 %% ============================================================
-% Final-report runner for Project B: Section 4.4 Shock reach
+% Final-report runner for Project B: Section 4.4 Exposure reach
 %
 % Purpose:
 %   Test whether broader direct quality-shock reach across ordinary
@@ -37,7 +37,7 @@ if ~exist(outdir, 'dir')
 end
 
 fprintf('\n============================================================\n');
-fprintf('Project B final-report runner: Section 4.4 Shock reach\n');
+fprintf('Project B final-report runner: Section 4.4 Exposure reach\n');
 fprintf('============================================================\n');
 fprintf('Direct shock size (DeltaQ): %.2f\n', deltaQ);
 fprintf('Ordinary-consumer exposure levels: ');
@@ -256,7 +256,7 @@ end
 
 grid(ax_main, 'on');
 box(ax_main, 'on');
-title(ax_main, sprintf('Shock reach: BT trajectories under varying ordinary-consumer exposure (\\DeltaQ = %.2f)', deltaQ), ...
+title(ax_main, sprintf('Exposure reach: BT trajectories under varying ordinary-consumer exposure (\\Delta Q = %.2f)', deltaQ), ...
     'FontSize', 15, 'FontWeight', 'bold');
 xlabel(ax_main, 'Time step', 'FontSize', 12);
 ylabel(ax_main, 'Mean opinion', 'FontSize', 12);
@@ -372,7 +372,7 @@ lgd = legend(ax1, [hS0_bt_app; hCases_bt_app], ...
     'Box', 'on');
 lgd.Layout.Tile = 'north';
 
-title(tl, sprintf('Shock reach under varying ordinary-consumer exposure (\\DeltaQ = %.2f)', deltaQ), ...
+title(tl, sprintf('Exposure reach under varying ordinary-consumer exposure (\\Delta Q = %.2f)', deltaQ), ...
     'FontSize', 15, 'FontWeight', 'bold');
 
 exportgraphics(f_app, fullfile(outdir, 'Appendix_A2_ShockReach_BTQ_VaryingExposure.png'), 'Resolution', 300);

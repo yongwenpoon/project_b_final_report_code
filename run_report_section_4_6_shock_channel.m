@@ -2,7 +2,7 @@
 clear; clc; close all;
 
 %% ============================================================
-% Final-report runner for Project B: Section 4.6 Shock-channel comparison
+% Final-report runner for Project B: Section 4.6 Shock entry-point comparison
 %
 % Main-text question:
 %   Holding the baseline system, shocked groups, and direct shock size
@@ -35,7 +35,7 @@ if ~exist(outdir, 'dir')
 end
 
 fprintf('\n============================================================\n');
-fprintf('Project B final-report runner: Section 4.6 Shock-channel comparison\n');
+fprintf('Project B final-report runner: Section 4.6 Shock entry-point comparison\n');
 fprintf('============================================================\n');
 fprintf('Matched direct shock size: %.2f\n', delta_main);
 
@@ -282,7 +282,7 @@ lgd_main = legend(ax1, [h1, h2, h3], ...
     'Box', 'on', ...
     'Location', 'northoutside');
 
-title(tl1, sprintf('Shock-channel comparison under matched direct shocks of size %.2f', delta_main), ...
+title(tl1, sprintf('Entry-point comparison under matched direct shocks of size %.2f', delta_main), ...
     'FontSize', 15, 'FontWeight', 'bold');
 
 exportgraphics(f1, fullfile(outdir, 'Figure_4_6_ShockChannel_BT_Only.png'), 'Resolution', 300);
@@ -375,7 +375,7 @@ lgd_app = legend(ax3, [hq1, hq2, hq3], ...
     'Box', 'on', ...
     'Location', 'northoutside');
 
-title(tl2, 'Supportive Q and OM trajectories by shock channel', ...
+title(tl2, 'Supportive Q and OM trajectories by shock entry point', ...
     'FontSize', 15, 'FontWeight', 'bold');
 
 exportgraphics(f2, fullfile(outdir, 'Appendix_A3_ShockChannel_Topics_Q_OM.png'), 'Resolution', 300);
@@ -408,7 +408,7 @@ set(ax5, 'XTick', 1:3, ...
     'XTickLabelRotation', 10);
 
 ylabel(ax5, 'Final BT');
-title(ax5, 'Role-specific final BT by shock channel', ...
+title(ax5, 'Role-specific final BT by shock entry point', ...
     'FontSize', 13, 'FontWeight', 'bold');
 grid(ax5, 'on');
 box(ax5, 'on');
